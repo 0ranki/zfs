@@ -21,8 +21,13 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-__ZFS_CMD="@sbindir@/zfs"
-__ZPOOL_CMD="@sbindir@/zpool"
+if [[ -w /dev/zfs ]]; then
+    __ZFS_CMD="zfs"
+    __ZPOOL_CMD="zpool"
+else
+    __ZFS_CMD="sudo zfs"
+    __ZPOOL_CMD="sudo zpool"
+fi
 
 # Disable bash's built-in hostname completion, as this makes it impossible to
 # provide completions containing an @-sign, which is necessary for completing
